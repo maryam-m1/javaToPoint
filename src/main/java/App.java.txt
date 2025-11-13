@@ -1,0 +1,6 @@
+public class App {
+        public static void main(String[] args) {
+            // This is the file Jenkins will compile and run.
+            System.out.println("Jenkins CI/CD Lab 1: Java Project Built!");
+        }
+    }
