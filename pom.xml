@@ -1,8 +1,9 @@
-<project xmlns="https://www.google.com/search?q=http://maven.apache.org/POM/4.0.0"
-xmlns:xsi="https://www.google.com/search?q=http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="https://www.google.com/search?q=http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <!-- REQUIRED ROOT ELEMENTS -->
+    <modelVersion>4.0.0</modelVersion>
     <groupId>com.lab</groupId>
     <artifactId>java-to-point</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -11,5 +12,63 @@ xsi:schemaLocation="https://www.google.com/search?q=http://maven.apache.org/POM/
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <maven-site-plugin.version>3.12.1</maven-site-plugin.version>
     </properties>
+
+    <dependencies>
+        <!-- No dependencies are currently listed, but this tag must exist -->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Corrects the LinkageError during site generation (as you previously added) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- 
+        *** THE REPORTING BLOCK (ADDED CORRECTLY) ***
+        This section is placed correctly, at the same level as <build>.
+    -->
+    <reporting>
+        <plugins>
+            <!-- 1. SpotBugs Plugin -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>4.8.6.2</version>
+                <configuration>
+                    <xmlOutput>true</xmlOutput>
+                    <xmlOutputFile>${project.build.directory}/site/spotbugsXml.xml</xmlOutputFile>
+                </configuration>
+            </plugin>
+
+            <!-- 2. PMD Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.23.0</version>
+                <configuration>
+                    <linkXRef>false</linkXRef>
+                    <sourceEncoding>UTF-8</sourceEncoding>
+                </configuration>
+            </plugin>
+
+            <!-- 3. Checkstyle Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <linkXRef>false</linkXRef>
+                    <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
 </project>
